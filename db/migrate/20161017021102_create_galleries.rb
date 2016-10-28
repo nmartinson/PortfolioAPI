@@ -5,6 +5,7 @@ class CreateGalleries < ActiveRecord::Migration
       t.string :description
       t.boolean :protected
       t.string :cover_image
+      t.boolean :cover_is_landscape
       t.datetime :created
 
       t.timestamps null: false

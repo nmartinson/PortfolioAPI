@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 			resource :photos
 			resource :setting
 			resource :gallery
+			resource :emails
+			resource :features
 		end
 	end
 end

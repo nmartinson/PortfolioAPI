@@ -21,20 +21,24 @@ ActiveRecord::Schema.define(version: 20161017043742) do
     t.string   "description"
     t.boolean  "protected"
     t.string   "cover_image"
+    t.boolean  "cover_is_landscape"
     t.datetime "created"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "photos", force: :cascade do |t|
+    t.boolean  "is_featured"
+    t.boolean  "is_landscape"
+    t.string   "tags"
     t.string   "name"
     t.string   "description"
     t.boolean  "protected"
     t.string   "url"
     t.datetime "created"
     t.integer  "gallery_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "photos", ["gallery_id"], name: "index_photos_on_gallery_id", using: :btree

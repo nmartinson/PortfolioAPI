@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     actionmailer (4.2.3)
       actionpack (= 4.2.3)
@@ -36,15 +36,18 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.4.0)
     arel (6.0.3)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
     byebug (9.0.6)
-    coderay (1.1.0)
+    coderay (1.1.1)
     concurrent-ruby (1.0.2)
     debug_inspector (0.0.2)
     erubis (2.7.0)
+    fastimage (2.0.0)
+      addressable (~> 2)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -65,12 +68,13 @@ GEM
     multi_json (1.12.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-    pg (0.18.4)
-    pry (0.10.1)
+    pg (0.19.0)
+    pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rack (1.6.4)
+    rack-cors (0.4.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.3)
@@ -103,6 +107,8 @@ GEM
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    sendgrid (1.2.4)
+      json
     slop (3.6.0)
     spring (2.0.0)
       activesupport (>= 4.2)
@@ -128,10 +134,16 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  fastimage
   jbuilder (~> 2.0)
   pg
   pry
+  rack-cors
   rails (= 4.2.3)
   sdoc (~> 0.4.0)
+  sendgrid
   spring
   web-console (~> 2.0)
+
+BUNDLED WITH
+   1.13.1
