@@ -29,11 +29,11 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {  
-            :address              =>  "smtp.gmail.com",
-            :port                 =>  587,
-            :domain               =>  'gmail.com',
-            :user_name            =>  '10khourbot@gmail.com',
-            :password             =>  'deadline13',
+            :address              =>  "mail.boundless-journey.com",
+            :port                 =>  26,
+            :domain               =>  'boundless-journey.com',
+            :user_name            =>  'photoinquiries@boundless-journey.com',
+            :password             =>  'G2G-2FP-ssg-JoW',
             :authentication       =>  'plain',
             :enable_starttls_auto =>  true    }
 
