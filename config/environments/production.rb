@@ -82,7 +82,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {  
             :address              =>  "mail.boundless-journey.com",
-            :port                 =>  26,
+            :port                 =>  25,
             :domain               =>  'boundless-journey.com',
             :user_name            =>  'photoinquiries@boundless-journey.com',
             :password             =>  'G2G-2FP-ssg-JoW',
