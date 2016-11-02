@@ -18,7 +18,7 @@ class Api::V1::FeaturesController < Api::V1::ApplicationController
 
         # size = FastImage.size(path)
         is_landscape = false #size[0] > size[1] # width > height
-        @photo = Photo.create(name: image[:name], description: image[:description], is_landscape: is_landscape, protected: image[:protected], url: "http://localhost:3000/Features/" + image[:uniqueFileName], is_featured: true)
+        @photo = Photo.create(name: image[:name], description: image[:description], is_landscape: is_landscape, protected: image[:protected], url: "http://www.boundless-journey.com/portfolio/images/features/" + image[:uniqueFileName], is_featured: true)
         uniqueNames << image[:uniqueFileName] 
       end
     end
