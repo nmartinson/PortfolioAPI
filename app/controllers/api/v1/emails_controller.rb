@@ -1,6 +1,6 @@
 class Api::V1::EmailsController < Api::V1::ApplicationController
 
-  def index
+  def show
     render plain: "NOTHING"
   end
 
