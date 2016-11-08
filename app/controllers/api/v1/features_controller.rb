@@ -9,9 +9,9 @@ class Api::V1::FeaturesController < Api::V1::ApplicationController
     uniqueNames = []
     params[:images].each do |image|
       if image[:file] && image[:uniqueFileName]
-        # Dir.mkdir('public/Features/') unless File.exists?('public/Features/')
+        Dir.mkdir('public/Features/') unless File.exists?('public/Features/')
 
-        # jpg = Base64.decode64(image[:file]['data:image/jpg;base64,'.length .. -1])
+        jpg = Base64.decode64(image[:file]['data:image/jpg;base64,'.length .. -1])
         # directory = "public/Features"
         # path = File.join(directory, image[:uniqueFileName])
         # File.open(path, "wb") { |f| f.write(jpg) }
@@ -26,7 +26,7 @@ class Api::V1::FeaturesController < Api::V1::ApplicationController
     params[:images].each do |image|
       if image[:settings].present?
         image[:settings].each do |setting|
-          Setting.create(size: setting[:size], price: setting[:price], photo_id: @photo.id)
+          Setting.create(size: setting[:size], price: setting[:price], medium: setting[:medium], photo_id: @photo.id)
         end
       end
     end
