@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 			resource :gallery
 			resource :emails
 			resource :features
+			match "/photos/:id" => "photos#show", via: :get
 		end
 	end
 end

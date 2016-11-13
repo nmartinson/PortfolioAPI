@@ -5,6 +5,11 @@ class Api::V1::PhotosController < Api::V1::ApplicationController
     render json: @photoset
   end
 
+  def show
+    @photos = Photo.includes(:settings, :tags).where(id: params[:id]).first
+    render json: @photos.as_json({include: {settings:{}, tags:{}}})
+  end
+
   def update
     puts params
     if params[:image].present?

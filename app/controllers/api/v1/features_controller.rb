@@ -16,9 +16,22 @@ class Api::V1::FeaturesController < Api::V1::ApplicationController
         # path = File.join(directory, image[:uniqueFileName])
         # File.open(path, "wb") { |f| f.write(jpg) }
 
-        # size = FastImage.size(path)
-        is_landscape = false #size[0] > size[1] # width > height
-        @photo = Photo.create(name: image[:name], description: image[:description], is_landscape: is_landscape, protected: image[:protected], url: "http://www.boundless-journey.com/portfolio/images/features/" + image[:uniqueFileName], is_featured: true)
+        metadata = image[:imageData]
+        if metadata.blank?
+          @photo = Photo.create(name: image[:name], description: image[:description], protected: image[:protected], url: "http://www.boundless-journey.com/portfolio/images/features/" + image[:uniqueFileName], is_featured: true)
+        else
+          date = metadata[:date].gsub(":", "-")
+          puts metadata[:tags]
+          @photo = Photo.create(date: date, copyright: metadata[:copyright], fstop: metadata[:fstop], exposure_time: metadata[:exposureTime], focal_length: metadata[:focalLength], iso: metadata[:iso], make: metadata[:make], model: metadata[:model], name: image[:name], description: image[:description], protected: image[:protected], url: "http://www.boundless-journey.com/portfolio/images/features/" + image[:uniqueFileName], is_featured: true)
+          if metadata[:tags].present?
+            puts 'exist'
+            metadata[:tags].each do |tag|
+              Tag.create(tag: tag, photo_id: @photo.id)
+            end
+          end
+        end
+
+        
         uniqueNames << image[:uniqueFileName] 
       end
     end

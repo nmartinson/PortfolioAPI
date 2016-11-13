@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108003026) do
+ActiveRecord::Schema.define(version: 20161111233750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,8 +37,16 @@ ActiveRecord::Schema.define(version: 20161108003026) do
     t.string   "url"
     t.datetime "created"
     t.integer  "gallery_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "copyright"
+    t.string   "exposure_time"
+    t.float    "fstop"
+    t.string   "focal_length"
+    t.integer  "iso"
+    t.string   "make"
+    t.string   "model"
+    t.datetime "date"
   end
 
   add_index "photos", ["gallery_id"], name: "index_photos_on_gallery_id", using: :btree
@@ -54,6 +62,16 @@ ActiveRecord::Schema.define(version: 20161108003026) do
 
   add_index "settings", ["photo_id"], name: "index_settings_on_photo_id", using: :btree
 
+  create_table "tags", force: :cascade do |t|
+    t.integer  "photo_id"
+    t.string   "tag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "tags", ["photo_id"], name: "index_tags_on_photo_id", using: :btree
+
   add_foreign_key "photos", "galleries"
   add_foreign_key "settings", "photos"
+  add_foreign_key "tags", "photos"
 end
