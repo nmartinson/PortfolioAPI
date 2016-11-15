@@ -20,11 +20,20 @@ class Api::V1::FeaturesController < Api::V1::ApplicationController
         if metadata.blank?
           @photo = Photo.create(name: image[:name], description: image[:description], protected: image[:protected], url: "http://www.boundless-journey.com/portfolio/images/features/" + image[:uniqueFileName], is_featured: true)
         else
-          date = metadata[:date].gsub(":", "-")
-          puts metadata[:tags]
-          @photo = Photo.create(date: date, copyright: metadata[:copyright], fstop: metadata[:fstop], exposure_time: metadata[:exposureTime], focal_length: metadata[:focalLength], iso: metadata[:iso], make: metadata[:make], model: metadata[:model], name: image[:name], description: image[:description], protected: image[:protected], url: "http://www.boundless-journey.com/portfolio/images/features/" + image[:uniqueFileName], is_featured: true)
+          if metadata[:date].present?
+            date = metadata[:date].gsub(":", "-")
+          else
+            date = nil
+          end
+          if metadata[:gps].present?
+            lat = metadata[:gps][:Lat]
+            long = metadata[:gps][:Long]
+          else
+            lat = nil
+            long = nil
+          end
+          @photo = Photo.create(lens: metadata[:lens], gps_lat: lat, gps_long: long, date: date, copyright: metadata[:copyright], fstop: metadata[:fstop], exposure_time: metadata[:exposureTime], focal_length: metadata[:focalLength], iso: metadata[:iso], make: metadata[:make], model: metadata[:model], name: image[:name], description: image[:description], protected: image[:protected], url: "http://www.boundless-journey.com/portfolio/images/features/" + image[:uniqueFileName], is_featured: true)
           if metadata[:tags].present?
-            puts 'exist'
             metadata[:tags].each do |tag|
               Tag.create(tag: tag, photo_id: @photo.id)
             end
