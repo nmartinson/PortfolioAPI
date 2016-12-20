@@ -11,10 +11,11 @@ class Api::V1::PhotosController < Api::V1::ApplicationController
   end
 
   def update
+    puts 'update'
     puts params
     if params[:image].present?
       image = params[:image]
-      Photo.where(:id => image[:photo_id]).update_all(name: image[:name], description: image[:description])
+      Photo.where(:id => image[:photo_id]).update_all(name: image[:name], description: image[:description], order: image[:order])
       if image[:settings].present?
         image[:settings].each do |setting|
           if setting[:id].present?
