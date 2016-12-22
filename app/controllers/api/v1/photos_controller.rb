@@ -19,9 +19,9 @@ class Api::V1::PhotosController < Api::V1::ApplicationController
       if image[:settings].present?
         image[:settings].each do |setting|
           if setting[:id].present?
-            Setting.where(:id => setting[:id]).update_all(size: setting[:size], price: setting[:price], medium: setting[:medium])
+            Setting.where(:id => setting[:id]).update_all(size: setting[:size], price: setting[:price], medium: setting[:medium], dealer: setting[:dealer], dealer_cost: setting[:dealer_cost], has_free_shipping: setting[:has_free_shipping])
           elsif
-            Setting.create(size: setting[:size], price: setting[:price], photo_id: image[:photo_id], medium: setting[:medium]) 
+            Setting.create(size: setting[:size], price: setting[:price], photo_id: image[:photo_id], medium: setting[:medium],dealer: setting[:dealer], dealer_cost: setting[:dealer_cost], has_free_shipping: setting[:has_free_shipping]) 
           end
         end
       end
