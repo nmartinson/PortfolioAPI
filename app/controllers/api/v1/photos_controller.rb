@@ -11,21 +11,25 @@ class Api::V1::PhotosController < Api::V1::ApplicationController
   end
 
   def update
-    puts 'update'
-    puts params
     if params[:image].present?
       image = params[:image]
-      Photo.where(:id => image[:photo_id]).update_all(name: image[:name], description: image[:description], order: image[:order])
-      if image[:settings].present?
+      currentPhoto = Photo.where(id: image[:photo_id]).first_or_initialize
+      currentPhoto.name = image["name"]
+      currentPhoto.description = image["description"]
+      currentPhoto.order = image["order"]
+      currentPhoto.save
+
+      PhotoSetting.where(photo_id: image[:photo_id]).destroy_all
+
+      if image[:settings].nil? == false
         image[:settings].each do |setting|
-          if setting[:id].present?
-            Setting.where(:id => setting[:id]).update_all(size: setting[:size], price: setting[:price], medium: setting[:medium], dealer: setting[:dealer], dealer_cost: setting[:dealer_cost], has_free_shipping: setting[:has_free_shipping])
-          elsif
-            Setting.create(size: setting[:size], price: setting[:price], photo_id: image[:photo_id], medium: setting[:medium],dealer: setting[:dealer], dealer_cost: setting[:dealer_cost], has_free_shipping: setting[:has_free_shipping]) 
-          end
+          currentPhotoSetting = PhotoSetting.where(photo_id: image[:photo_id], setting_id: setting["id"]).first_or_initialize
+          currentPhotoSetting.photo_id = currentPhoto["id"]
+          currentPhotoSetting.setting_id = setting["id"]
+          currentPhotoSetting.save
         end
       end
     end
-       render plain: "Update success"
+   render plain: "Update success"
   end
 end

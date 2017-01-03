@@ -91,10 +91,10 @@ end
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {  
-            :address              =>  "mail.boundless-journey.com",
+            :address              =>  Rails.application.secrets.email["mail_server"],
             :port                 =>  26,
-            :user_name            =>  'photoinquiries@boundless-journey.com',
-            :password             =>  'G2G-2FP-ssg-JoW',
+            :user_name            =>  Rails.application.secrets.email["inquiries_username"],
+            :password             =>  Rails.application.secrets.email["inquiries_password"],
             :authentication       =>  'plain',
             :enable_starttls_auto =>  false    }
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161221175550) do
+ActiveRecord::Schema.define(version: 20161226193925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20161221175550) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end
+
+  create_table "photo_settings", force: :cascade do |t|
+    t.integer  "photo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "setting_id"
+  end
+
+  add_index "photo_settings", ["photo_id"], name: "index_photo_settings_on_photo_id", using: :btree
+  add_index "photo_settings", ["setting_id"], name: "index_photo_settings_on_setting_id", using: :btree
 
   create_table "photos", force: :cascade do |t|
     t.boolean  "is_featured"
@@ -58,7 +68,6 @@ ActiveRecord::Schema.define(version: 20161221175550) do
   create_table "settings", force: :cascade do |t|
     t.string   "size"
     t.float    "price"
-    t.integer  "photo_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "medium"
@@ -66,8 +75,6 @@ ActiveRecord::Schema.define(version: 20161221175550) do
     t.string   "dealer"
     t.boolean  "has_free_shipping"
   end
-
-  add_index "settings", ["photo_id"], name: "index_settings_on_photo_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.integer  "photo_id"
@@ -78,7 +85,8 @@ ActiveRecord::Schema.define(version: 20161221175550) do
 
   add_index "tags", ["photo_id"], name: "index_tags_on_photo_id", using: :btree
 
+  add_foreign_key "photo_settings", "photos"
+  add_foreign_key "photo_settings", "settings"
   add_foreign_key "photos", "galleries"
-  add_foreign_key "settings", "photos"
   add_foreign_key "tags", "photos"
 end

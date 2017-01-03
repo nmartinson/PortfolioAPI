@@ -1,8 +1,8 @@
 class Api::V1::FeaturesController < Api::V1::ApplicationController
 
-  def show
-    @photos = Photo.where(is_featured: true)
-    render json: @photos.order(order: :asc).as_json({include: {settings:{}}})
+  def index
+    photos = Photo.includes(photo_settings: :setting).featured
+    render json: photos.order(order: :asc).as_json({include: {settings:{}}})
   end
 
   def create
@@ -12,9 +12,6 @@ class Api::V1::FeaturesController < Api::V1::ApplicationController
         Dir.mkdir('public/Features/') unless File.exists?('public/Features/')
 
         jpg = Base64.decode64(image[:file]['data:image/jpg;base64,'.length .. -1])
-        # directory = "public/Features"
-        # path = File.join(directory, image[:uniqueFileName])
-        # File.open(path, "wb") { |f| f.write(jpg) }
 
         metadata = image[:imageData]
         if metadata.blank?
