@@ -25,3 +25,5 @@
   #   Gallery.create(stuff)
   # end
 # end
+
+  cities = Medium.create([{ value: 'Canvas' }, { value: 'Metal' }, { value: 'Print' }, { value: 'Print - Matted' }])
