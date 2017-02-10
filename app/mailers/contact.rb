@@ -4,7 +4,7 @@ class Contact < ActionMailer::Base
   # send a signup email to the user, pass in the user object that   contains the user's email address
   def send_contact_email(params)
     @contact = params;
-    mail( :to => 'nickmartinson986@gmail.com',
+    mail( :to => 'photoinquiries@boundless-journey.com',
     :subject => params[:subject])
   end
 end
