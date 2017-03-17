@@ -1,4 +1,5 @@
 class Api::V1::FeaturesController < Api::V1::ApplicationController
+  THUMB_URL = "http://www.boundless-journey.com/portfolio/images/features/thumbnails/"
 
   def index
     photos = Photo.includes(photo_settings: :setting).featured
@@ -15,7 +16,7 @@ class Api::V1::FeaturesController < Api::V1::ApplicationController
 
         metadata = image[:imageData]
         if metadata.blank?
-          thumbnail_url = "http://www.boundless-journey.com/portfolio/images/features/thumbnails/" + image[:uniqueFileName].chomp(".jpg") + "_thumb.jpg"
+          thumbnail_url = THUMB_URL + image[:uniqueFileName].chomp(".jpg") + "_thumb.jpg"
           @photo = Photo.create(name: image[:name], description: image[:description], protected: image[:protected], url: "http://www.boundless-journey.com/portfolio/images/features/" + image[:uniqueFileName], thumbnail_url: thumbnail_url, is_featured: true)
         else
           if metadata[:date].present?
@@ -30,7 +31,7 @@ class Api::V1::FeaturesController < Api::V1::ApplicationController
             lat = nil
             long = nil
           end
-          thumbnail_url = "http://www.boundless-journey.com/portfolio/images/features/thumbnails/" + image[:uniqueFileName].chomp(".jpg") + "_thumb.jpg"
+          thumbnail_url = THUMB_URL + image[:uniqueFileName].chomp(".jpg") + "_thumb.jpg"
           @photo = Photo.create(lens: metadata[:lens], gps_lat: lat, gps_long: long, date: date, copyright: metadata[:copyright], fstop: metadata[:fstop], exposure_time: metadata[:exposureTime], focal_length: metadata[:focalLength], iso: metadata[:iso], make: metadata[:make], model: metadata[:model], name: image[:name], description: image[:description], protected: image[:protected], url: "http://www.boundless-journey.com/portfolio/images/features/" + image[:uniqueFileName], thumbnail_url: thumbnail_url, is_featured: true)
           if metadata[:tags].present?
             metadata[:tags].each do |tag|
