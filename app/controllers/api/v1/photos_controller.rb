@@ -30,6 +30,16 @@ class Api::V1::PhotosController < Api::V1::ApplicationController
           currentPhotoSetting.save
         end
       end
+
+      if image[:galleries].present?
+        image[:galleries].each do |galleryId|
+          GalleryPhoto.where(photo_id: currentPhoto.id).destroy_all
+          gallery = GalleryPhoto.where(photo_id: currentPhoto.id, gallery_id: galleryId).first_or_initialize
+          gallery.photo_id = currentPhoto.id
+          gallery.save
+        end
+      end
+
     end
    render plain: "Update success"
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317004758) do
+ActiveRecord::Schema.define(version: 20170323041131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,14 +31,15 @@ ActiveRecord::Schema.define(version: 20170317004758) do
 
   add_index "galleries", ["photo_id"], name: "index_galleries_on_photo_id", using: :btree
 
-  create_table "galleries_photos", force: :cascade do |t|
-    t.integer  "photo_id"
+  create_table "gallery_photos", force: :cascade do |t|
     t.integer  "gallery_id"
+    t.integer  "photo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "galleries_photos", ["gallery_id"], name: "index_galleries_photos_on_gallery_id", using: :btree
+  add_index "gallery_photos", ["gallery_id"], name: "index_gallery_photos_on_gallery_id", using: :btree
+  add_index "gallery_photos", ["photo_id"], name: "index_gallery_photos_on_photo_id", using: :btree
 
   create_table "media", force: :cascade do |t|
     t.string   "value"
@@ -117,7 +118,8 @@ ActiveRecord::Schema.define(version: 20170317004758) do
 
   add_index "tags", ["photo_id"], name: "index_tags_on_photo_id", using: :btree
 
-  add_foreign_key "galleries_photos", "galleries"
+  add_foreign_key "gallery_photos", "galleries"
+  add_foreign_key "gallery_photos", "photos"
   add_foreign_key "photo_settings", "photos"
   add_foreign_key "photo_settings", "settings"
   add_foreign_key "photos", "galleries"

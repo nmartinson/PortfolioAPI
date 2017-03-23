@@ -39,7 +39,15 @@ class Api::V1::FeaturesController < Api::V1::ApplicationController
             end
           end
         end
-
+        if image[:galleries].present?
+          image[:galleries].each do |galleryId|
+            GalleryPhoto.where(gallery_id: galleryId).destroy_all
+            gallery = GalleryPhoto.where(gallery_id: galleryId).first_or_initialize
+            gallery.id = galleryId
+            gallery.photo_id = @photo.id
+            gallery.save
+          end
+        end
         
         uniqueNames << image[:uniqueFileName] 
       end

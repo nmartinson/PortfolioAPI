@@ -1,23 +1,21 @@
 class Api::V1::GalleryController < Api::V1::ApplicationController
 
-  def index
-    @gallery = Gallery.includes(:galleries_photos).where(id: params[:gallery_id])
-    render json: @gallery.as_json({include: {galleries_photos:{}}})
-
-
+  def show
+    @gallery = Gallery.includes(:gallery_photos).where(id: params[:id]).first
+    render json: @gallery.as_json({include:{photos:{}}})
   end
 
 
   def create
-      if params[:galleryName]
+      if params[:name] && !Gallery.exists?(name: params[:name])
         # Dir.mkdir('public/Galleries/' +params[:galleryName]) unless File.exists?('public/Galleries/' +params[:galleryName])
         cover = params[:cover_image]
         if(params[:cover_image].present? == false)
           cover = "http://localhost:3000/assets/Galleries/Olympic/DSC_6485-347f5ed8bac3ab0620cf81bf1486712a745c2a2d650dbe95c9b84d444bd5a7e3.jpg"
         end
-        @gallery = Gallery.create(name: params[:galleryName], description: params[:description], protected: false, cover_image: cover)
+        @gallery = Gallery.create(name: params[:name], description: params[:description], protected: false, cover_image: cover)
       end
-
+      render plain: "success"
   end
 
 
