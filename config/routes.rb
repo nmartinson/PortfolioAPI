@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 			resources :emails
 			resources :features
 			resources :mediums
+			resources :gallery_photos
 			match "/photos" => "photos#update", via: :put
 			match "/photos/:id" => "photos#show", via: :get
 			match "/settings" => "settings#update", via: :put

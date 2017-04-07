@@ -32,9 +32,10 @@ class Api::V1::PhotosController < Api::V1::ApplicationController
       end
 
       if image[:galleries].present?
-        image[:galleries].each do |galleryId|
           GalleryPhoto.where(photo_id: currentPhoto.id).destroy_all
-          gallery = GalleryPhoto.where(photo_id: currentPhoto.id, gallery_id: galleryId).first_or_initialize
+
+        image[:galleries].each do |gallery|
+          gallery = GalleryPhoto.where(photo_id: currentPhoto.id, gallery_id: gallery[:id]).first_or_initialize
           gallery.photo_id = currentPhoto.id
           gallery.save
         end
