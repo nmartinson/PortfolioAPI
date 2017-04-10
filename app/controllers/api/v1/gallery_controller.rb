@@ -18,6 +18,27 @@ class Api::V1::GalleryController < Api::V1::ApplicationController
       render plain: "success"
   end
 
+  def destroy
+    GalleryPhoto.where(gallery_id: params[:id]).destroy_all
+    @gallery = Gallery.where(id: params[:id]).first
+    @gallery.destroy
+    render plain: 200
+  end
+
+
+  def update
+    if params.present?
+      @gallery = Gallery.where(id: params["id"]).first
+      @gallery.description = params["description"]
+      @gallery.name = params["name"]
+      # gallery.order = image["order"]
+      @gallery.save
+      render plain: "Update success"
+    else
+      render plain: "Update failure"
+    end
+  end
+
 
 
 

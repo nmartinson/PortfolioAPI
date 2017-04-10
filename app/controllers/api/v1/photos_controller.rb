@@ -32,8 +32,7 @@ class Api::V1::PhotosController < Api::V1::ApplicationController
       end
 
       if image[:galleries].present?
-          GalleryPhoto.where(photo_id: currentPhoto.id).destroy_all
-
+        GalleryPhoto.where(photo_id: currentPhoto.id).destroy_all
         image[:galleries].each do |gallery|
           gallery = GalleryPhoto.where(photo_id: currentPhoto.id, gallery_id: gallery[:id]).first_or_initialize
           gallery.photo_id = currentPhoto.id
@@ -107,5 +106,12 @@ def create
   end
 
 
+  def destroy
+     @Photo = Photo.find params[:id]
+     @galleries = GalleryPhoto.where(photo_id: params[:id]).first_or_initialize
+     @galleries.destroy
+     @Photo.destroy
+     render plain: 200
+  end
 
 end

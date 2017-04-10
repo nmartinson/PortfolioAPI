@@ -8,13 +8,14 @@ Rails.application.routes.draw do
 			resources :gallery do
 			end
 			resources :galleries
-			resources :photos
+			resources :photos, only: [:destroy, :put, :get]
 			resources :settings, only: [:index, :show, :update] 
 			resources :gallery
 			resources :emails
 			resources :features
 			resources :mediums
 			resources :gallery_photos
+			match "/gallery" => "gallery#update", via: :put
 			match "/photos" => "photos#update", via: :put
 			match "/photos/:id" => "photos#show", via: :get
 			match "/settings" => "settings#update", via: :put
