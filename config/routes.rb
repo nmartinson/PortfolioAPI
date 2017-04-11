@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 			resources :features
 			resources :mediums
 			resources :gallery_photos
+			match "/photos" => "photos#destroy", via: :delete
 			match "/gallery" => "gallery#update", via: :put
 			match "/photos" => "photos#update", via: :put
 			match "/photos/:id" => "photos#show", via: :get
