@@ -108,8 +108,10 @@ def create
 
   def destroy
      @Photo = Photo.find params[:id]
-     @galleries = GalleryPhoto.where(photo_id: params[:id]).first_or_initialize
-     @galleries.destroy
+     @Tags = Tag.where(photo_id: params[:id])
+     @Tags.destroy_all
+     @galleries = GalleryPhoto.where(photo_id: params[:id])
+     @galleries.destroy_all
      @Photo.destroy
      render plain: 200
   end
